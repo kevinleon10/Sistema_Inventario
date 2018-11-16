@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" table="SI_PERSONA" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <id name="cedula" type="string">
+            <column name="CEDULA" length="15" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="20" not-null="true" />
+        </property>
+        <property name="primerApellido" type="string">
+            <column name="PRIMER_APELLIDO" length="30" not-null="true" />
+        </property>
+        <property name="segundoApellido" type="string">
+            <column name="SEGUNDO_APELLIDO" length="30" />
+        </property>
+        <property name="funcionarioInie" type="boolean">
+            <column name="FUNCIONARIO_INIE" not-null="true" />
+        </property>
+        <set name="siBienInstitucionals" table="SI_BIEN_INSTITUCIONAL" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA" length="15" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional" />
+        </set>
+        <set name="siPrestamos" table="SI_PRESTAMO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA" length="15" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPrestamo" />
+        </set>
+        <set name="siActaDesechosForCedula1" table="SI_ACTA_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA1" length="15" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiActaDesecho" />
+        </set>
+        <set name="siAdquisicionPorTraslados" table="SI_ADQUISICION_POR_TRASLADO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA" length="15" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicionPorTraslado" />
+        </set>
+        <set name="siActaDesechosForCedula2" table="SI_ACTA_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA2" length="15" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiActaDesecho" />
+        </set>
+        <set name="siUnidadEvaluadoras" table="SI_UNIDAD_EVALUADORA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA" length="15" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadEvaluadora" />
+        </set>
+        <set name="siTraslados" table="SI_TRASLADO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CEDULA" length="15" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiTraslado" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <h:body>
+        <ui:composition template="/Plantillas/interno-modulo.xhtml">
+            <ui:define name="title">Módulo - #{controladorTraslado.tituloPagina}</ui:define>
+            <ui:define name="formulario"> 
+                <h:form> 
+                    <p:growl id="gwlMensaje" showDetail="true" sticky="false" life="5000" />
+                    <div class="center">
+                        <div class="panelTitulo"><h1>#{controladorTraslado.tituloPagina}</h1></div>                      
+                        <div class="FrmAgregarDatos">                              
+                            <h:form>
+                                <p:growl id="msgs" showDetail="true" />
+
+                                <p:fieldset legend="Información General" style="margin-bottom:20px">
+
+                                    <h:panelGrid style="margin-left: 30%;" columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+                                        <p:outputLabel value="Id del Traslado:"/>
+                                        <p:outputLabel value="#{controladorTraslado.numero}-#{controladorTraslado.anno}" />
+                                        <p:outputLabel value="Numero de Oficio"/>
+                                        <p:inputText value="#{controladorTraslado.numOficio}" />
+                                        <p:outputLabel value="Observaciones:"/>
+                                        <p:inputTextarea rows="3" cols="33" value="#{controladorTraslado.observaciones}"/>
+                                        <p:outputLabel value="Encargado:" />
+                                        <p:selectOneMenu value="#{controladorTraslado.siPersona}" converter="personaConverter" panelStyle="width:600px"
+                                                         effect="fade" var="persona" filter="true" filterMatchMode="contains">
+                                            <f:selectItems value="#{controladorPersona.listaPersonasDentroDelINIE}" var="persona" itemLabel=" #{persona.cedula}" itemValue="#{persona}" />
+                                            <p:column>
+                                                <h:outputText value="#{persona.cedula}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.nombre}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.primerApellido}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.segundoApellido}" />
+                                            </p:column>
+                                        </p:selectOneMenu>
+                                        
+                                        <p:outputLabel value="Estado del Traslado:"/>
+                                        <p:outputLabel value="#{controladorTraslado.estado}" />
+                                        <p:outputLabel value="Fecha de Traslado"/>
+                                        <p:calendar value="#{controladorTraslado.fechaTraslado}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+
+                                        <p:outputLabel value="Unidad Académica:" />
+                                        <p:selectOneMenu  value="#{controladorTraslado.siUnidadAcademica}" converter="unidadAcademicaConverter" panelStyle="width:600px"
+                                                          effect="fade" var="unidad" filter="true" filterMatchMode="contains">
+                                            <f:selectItems value="#{controladorUnidadAcademica.listaUnidadesAcademicasQueTrasladan}" var="unidad" itemLabel="#{unidad.nombre}" itemValue="#{unidad}" />
+                                            <p:column>
+                                                <h:outputText value="#{unidad.codigo}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{unidad.nombre}" />
+                                            </p:column>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+
+                                </p:fieldset>
+
+                                <p:fieldset legend="Bienes" style="margin-bottom:20px" >
+                                    <p:pickList id="bienesAdquiridos" rendered="#{controladorTraslado.tipoTraslado ne 'BIEN_CONSULTAR_TRASLADO'}" value="#{controladorTraslado.listasBienesInstitucionales}" var="bien"
+                                                itemValue="#{bien}" itemLabel="Id: #{bien.consecutivo} Placa: #{bien.placa} Descripción: #{bien.descripcion}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="bienInstitucionalConverter">
+
+                                        <f:facet name="sourceCaption">Bienes Activos</f:facet>
+                                        <f:facet name="targetCaption">Bienes En Traslado</f:facet>
+                                    </p:pickList>
+                                    <p:dataTable var="bien" rendered="#{controladorTraslado.tipoTraslado eq 'BIEN_CONSULTAR_TRASLADO'}" value="#{controladorTraslado.listasBienesInstitucionales.target}" emptyMessage="No se encontraron bienes"
+                                             paginatorPosition="bottom" rows="5" paginator="true"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+                                    <p:column headerText="Consecutivo">
+                                        <h:outputText value="#{bien.consecutivo}" />
+                                    </p:column>
+                                    <p:column headerText="Placa">
+                                        <h:outputText value="#{bien.placa}" />
+                                    </p:column>
+                                    <p:column headerText="Descripción">
+                                        <h:outputText value="#{bien.descripcion}" />
+                                    </p:column>
+                                    </p:dataTable>
+                                </p:fieldset>
+
+                                <div class="panelBotonesAceptarCancelar">
+                                    <h:panelGroup>
+                                         <p:commandButton styleClass="btnAceptar" value="Aceptar"  onclick="PrimeFaces.monitorDownload(start, stop);"  rendered="#{controladorTraslado.tipoTraslado ne 'BIEN_CONSULTAR_TRASLADO'}" action="#{controladorTraslado.insertarTraslado()}"/>
+                                         <p:commandButton styleClass="btnCancelar" value="Regresar"  onclick="PrimeFaces.monitorDownload(start, stop);" action="#{controladorTraslado.mostrarFrmTraslados()}"/>
+                                    </h:panelGroup>
+                                </div>
+
+                            </h:form>
+                        </div>
+
+                    </div>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

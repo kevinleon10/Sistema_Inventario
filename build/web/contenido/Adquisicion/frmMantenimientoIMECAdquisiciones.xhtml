@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <h:body>
+        <ui:composition template="/Plantillas/interno-modulo.xhtml">
+            <ui:define name="title">Módulo - #{controladorAdquisicion.tituloPagina}</ui:define>
+            <ui:define name="formulario"> 
+                <h:form> 
+                    <p:growl id="gwlMensaje" showDetail="true" sticky="false" life="5000" />
+                    <div class="center">
+                        <div class="panelTitulo"><h1>#{controladorAdquisicion.tituloPagina}</h1></div>                      
+                        <div class="FrmAgregarDatos">                              
+                            <h:form>
+                                <p:growl id="msgs" showDetail="true" />
+
+                                <p:fieldset legend="Información General" style="margin-bottom:20px" >
+
+                                    <h:panelGrid rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_PRESUPUESTO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_PRESUPUESTO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_PRESUPUESTO_ESPECIFICA'}" columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+                                        <p:outputLabel value="Id:"/>
+                                        <p:outputLabel value="#{controladorAdquisicion.id}" />
+                                        <p:outputLabel value="Fecha de adquisicion:"/>
+                                        <p:calendar value="#{controladorAdquisicion.fechaAdquisicion}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+                                        <p:outputLabel value="Número de Proyecto:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siPresupuestoOrdinario.numeroProyecto}" />
+                                        <p:outputLabel value="Empresa:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siPresupuestoOrdinario.empresa}" />
+                                        <p:outputLabel value="Número de factura:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siPresupuestoOrdinario.numeroFactura}" />
+                                    </h:panelGrid>
+
+                                    <h:panelGrid rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_FUNDACION' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_FUNDACION' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_FUNDACION_ESPECIFICA'}"  columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+                                        <p:outputLabel value="Id:"/>
+                                        <p:outputLabel value="#{controladorAdquisicion.id}" />
+                                        <p:outputLabel value="Fecha de adquisicion:"/>
+                                        <p:calendar value="#{controladorAdquisicion.fechaAdquisicion}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+                                        <p:outputLabel value="Empresa:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siFundacionUcr.empresa}" />
+                                        <p:outputLabel value="Número de factura:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siFundacionUcr.numeroFactura}" />
+                                    </h:panelGrid>
+
+                                    <h:panelGrid rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_TRASLADO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_TRASLADO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_TRASLADO_ESPECIFICA'}" columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+                                        <p:outputLabel value="Id:"/>
+                                        <p:outputLabel value="#{controladorAdquisicion.id}" />
+                                        <p:outputLabel value="Fecha de adquisicion:"/>
+                                        <p:calendar value="#{controladorAdquisicion.fechaAdquisicion}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+                                        <p:outputLabel value="Número de Proyecto:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siAdquisicionPorTraslado.numeroOficio}" />
+
+                                        <p:outputLabel value="Unidad Académica:" />
+                                        <p:selectOneMenu  value="#{controladorAdquisicion.siAdquisicionPorTraslado.siUnidadAcademica}" converter="unidadAcademicaConverter"
+                                                          effect="fade" var="unidad" filter="true" filterMatchMode="contains">
+                                            <f:selectItems value="#{controladorUnidadAcademica.listaUnidadesAcademicasQueTrasladan}" var="unidad" itemLabel="#{unidad.nombre}" itemValue="#{unidad}" />
+                                            <p:column>
+                                                <h:outputText value="#{unidad.codigo}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{unidad.nombre}" />
+                                            </p:column>
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel value="Encargado:" />
+                                        <p:selectOneMenu value="#{controladorAdquisicion.siAdquisicionPorTraslado.siPersona }" converter="personaConverter"
+                                                         effect="fade" var="persona" filter="true" filterMatchMode="contains">
+                                            <f:selectItems value="#{controladorPersona.listaPersonasFueraDelINIE}" var="persona" itemLabel=" #{persona.cedula}" itemValue="#{persona}" />
+                                            <p:column>
+                                                <h:outputText value="#{persona.cedula}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.nombre}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.primerApellido}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.segundoApellido}" />
+                                            </p:column>
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+
+                                    <h:panelGrid rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_SUMINISTROS' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_SUMINISTROS' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_SUMINISTROS_ESPECIFICA'}"  columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+                                        <p:outputLabel value="Id:"/>
+                                        <p:outputLabel value="#{controladorAdquisicion.id}" />
+                                        <p:outputLabel value="Fecha de adquisicion:"/>
+                                        <p:calendar value="#{controladorAdquisicion.fechaAdquisicion}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+                                        <p:outputLabel value="Empresa:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siOficinaSuministros.empresa}" />
+                                        <p:outputLabel value="Orden de Compra:"/>
+                                        <p:inputText value="#{controladorAdquisicion.siOficinaSuministros.ordenCompra}" />
+                                        <p:outputLabel value="Número de Contratación"/>
+                                        <p:inputText value="#{controladorAdquisicion.siOficinaSuministros.numeroContratacion}" />
+                                    </h:panelGrid>
+
+                                </p:fieldset>
+
+                                <p:fieldset legend="Bienes Adquiridos" widgetVar="No se encontraron datos"   style="margin-bottom:20px" >
+                                    <p:pickList id="bienesAdquiridos" rendered="#{controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_PRESUPUESTO_ESPECIFICA' and controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_SUMINISTROS_ESPECIFICA' and controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_TRASLADO_ESPECIFICA' and controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_FUNDACION_ESPECIFICA'}" value="#{controladorAdquisicion.listasBienesInstitucionales}" var="bien"
+                                                itemValue="#{bien}" itemLabel="Id: #{bien.consecutivo} Placa: #{bien.placa} Descripción: #{bien.descripcion}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="bienInstitucionalConverter">
+                                        <f:facet name="sourceCaption">Bienes sin Adquisición</f:facet>
+                                        <f:facet name="targetCaption">Bienes Aquiridos</f:facet>
+                                    </p:pickList>
+                                    <p:dataTable var="bien" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_PRESUPUESTO_ESPECIFICA' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_SUMINISTROS_ESPECIFICA' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_TRASLADO_ESPECIFICA' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_FUNDACION_ESPECIFICA'}" value="#{controladorAdquisicion.listasBienesInstitucionales.target}" emptyMessage="No se encontraron bienes"
+                                             paginatorPosition="bottom" rows="5" paginator="true"
+                                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+                                    <p:column headerText="Consecutivo">
+                                        <h:outputText value="#{bien.consecutivo}" />
+                                    </p:column>
+                                    <p:column headerText="Placa">
+                                        <h:outputText value="#{bien.placa}" />
+                                    </p:column>
+                                    <p:column headerText="Descripción">
+                                        <h:outputText value="#{bien.descripcion}" />
+                                    </p:column>
+                                    <p:column headerText="Proceso Actual">
+                                        <h:outputText value="#{bien.proceso}" />
+                                    </p:column>
+                                </p:dataTable>
+                                </p:fieldset>
+
+                                
+
+                                <div class="panelBotonesAceptarCancelar">
+                                    <h:panelGroup>
+                                        <p:commandButton styleClass="btnAceptar" value="Aceptar"  onclick="PrimeFaces.monitorDownload(start, stop);" rendered="#{controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_PRESUPUESTO_ESPECIFICA' and controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_SUMINISTROS_ESPECIFICA' and controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_TRASLADO_ESPECIFICA' and controladorAdquisicion.tipoAdquisicion ne 'BIEN_ADQUISICION_CONSULTAR_FUNDACION_ESPECIFICA'}" action="#{controladorAdquisicion.insertarAdquisicion()}" />
+                                        <p:commandButton styleClass="btnCancelar" value="Regresar" onclick="PrimeFaces.monitorDownload(start, stop);" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_PRESUPUESTO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_PRESUPUESTO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_PRESUPUESTO_ESPECIFICA' }" action="#{controladorAdquisicion.mostrarFrmAdquisicionesPresupuesto()}"/>
+                                        <p:commandButton styleClass="btnCancelar" value="Regresar" onclick="PrimeFaces.monitorDownload(start, stop);" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_TRASLADO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_TRASLADO' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_TRASLADO_ESPECIFICA' }" action="#{controladorAdquisicion.mostrarFrmAdquisicionesTraslado()}"/>
+                                        <p:commandButton styleClass="btnCancelar" value="Regresar" onclick="PrimeFaces.monitorDownload(start, stop);" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_FUNDACION' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_FUNDACION' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_FUNDACION_ESPECIFICA'}" action="#{controladorAdquisicion.mostrarFrmAdquisicionesFundacion()}"/>
+                                        <p:commandButton styleClass="btnCancelar" value="Regresar" onclick="PrimeFaces.monitorDownload(start, stop);" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_INGRESAR_SUMINISTROS' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_EDITAR_SUMINISTROS' or controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_SUMINISTROS_ESPECIFICA'}" action="#{controladorAdquisicion.mostrarFrmAdquisicionesSuministros()}"/>
+                                    </h:panelGroup>
+                                </div>
+
+                            </h:form>
+                        </div>
+
+                    </div>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

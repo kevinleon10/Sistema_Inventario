@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiOficinaSuministros" table="SI_OFICINA_SUMINISTROS" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="foreign">
+                <param name="property">siAdquisicion</param>
+            </generator>
+        </id>
+        <one-to-one name="siAdquisicion" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicion" constrained="true"></one-to-one>
+        <property name="empresa" type="string">
+            <column name="EMPRESA" length="100" not-null="true" />
+        </property>
+        <property name="ordenCompra" type="string">
+            <column name="ORDEN_COMPRA" length="50" not-null="true" />
+        </property>
+        <property name="numeroContratacion" type="string">
+            <column name="NUMERO_CONTRATACION" length="50" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSubinformeDesecho" table="SI_SUBINFORME_DESECHO" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSubinformeDesechoId">
+            <key-property name="numeroInforme" type="int">
+                <column name="NUMERO_INFORME" />
+            </key-property>
+            <key-property name="annoInforme" type="int">
+                <column name="ANNO_INFORME" />
+            </key-property>
+            <key-property name="codigoInforme" type="string">
+                <column name="CODIGO_INFORME" length="20" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siActaDesecho" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiActaDesecho" fetch="select">
+            <column name="NUMERO_ACTA" />
+            <column name="ANNO_ACTA" />
+            <column name="OFICIO_DESECHO" length="30" />
+        </many-to-one>
+        <many-to-one name="siInformeTecnico" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiInformeTecnico" update="false" insert="false" fetch="select">
+            <column name="NUMERO_INFORME" not-null="true" />
+            <column name="ANNO_INFORME" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siSolicitudDesecho" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSolicitudDesecho" fetch="select">
+            <column name="NUMERO_SOLICITUD" not-null="true" />
+            <column name="ANNO_SOLICITUD" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siUnidadEvaluadora" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadEvaluadora" fetch="select">
+            <column name="CODIGO_EVALUADORA" length="20" not-null="true" />
+        </many-to-one>
+        <property name="motivoResultado" type="string">
+            <column name="MOTIVO_RESULTADO" length="300" not-null="true" />
+        </property>
+        <property name="resultado" type="string">
+            <column name="RESULTADO" length="20" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

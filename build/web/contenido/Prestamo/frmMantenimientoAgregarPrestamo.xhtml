@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <h:body>
+        <ui:composition template="/Plantillas/interno-modulo.xhtml">
+            <ui:define name="title">Agregar Prestamo</ui:define>
+            <ui:define name="formulario"> 
+                <h:form id="frmListadoReportesVidaAcademica"> 
+                    <p:growl id="gwlMensaje" showDetail="true" sticky="false" life="5000" />
+                    <div class="center">
+                        <div class="panelTitulo"><h1>Agregar Nuevo Prestamo</h1></div>                      
+                        <div class="FrmAgregarDatos">                              
+                            <h:form>
+                                <p:growl id="msgs" showDetail="true" />
+
+                                <p:fieldset legend="Información General" style="margin-bottom:20px">
+
+                                    <h:panelGrid style="margin-left: 30%;" columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+
+                                        <p:outputLabel value="Numero de Traslado:"/>
+                                        <p:outputLabel value="#{controladorPrestamo.ultimoNumPrestamo}" />
+                                        <p:outputLabel value="Año de Traslado:"/>
+                                        <p:outputLabel value="#{controladorPrestamo.anno}" />
+                                        <p:outputLabel value="Encargado:" />
+                                        <p:selectOneMenu value="#{controladorTraslado.siPersona}" converter="personaConverter" panelStyle="width:600px"
+                                                         effect="fade" var="persona" filter="true" filterMatchMode="contains">
+                                            <f:selectItems value="#{controladorPersona.listaPersonasFueraDelINIE}" var="persona" itemLabel=" #{persona.cedula}" itemValue="#{persona}" />
+                                            <p:column>
+                                                <h:outputText value="#{persona.cedula}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.nombre}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.primerApellido}" />
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{persona.segundoApellido}" />
+                                            </p:column>
+                                        </p:selectOneMenu>
+                                        <p:outputLabel value="Fecha Inicio:"/>
+                                        <p:calendar value="#{controladorPrestamo.fechaInicio}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+                                        <p:outputLabel value="Fecha Final:"/>
+                                        <p:calendar value="#{controladorPrestamo.fecharFinal}" navigator="true" pattern="yyyy-dd-MM"  mask="true" />
+                                        <p:outputLabel value="Estado:"/>
+                                        <p:inputText value="#{controladorPrestamo.estado}" />
+                                        <p:outputLabel value="En Condicion De:"/>
+                                        <p:inputText value="#{controladorPrestamo.enCondicionDe}" />
+                                    </h:panelGrid>
+
+                                </p:fieldset>
+
+                                <p:fieldset legend="Bienes Activos" style="margin-bottom:20px" >
+                                    <p:pickList id="bienesAdquiridos" value="#{controladorPrestamo.listasBienesInstitucionales}" var="bien"
+                                                itemValue="#{bien}" itemLabel="Id: #{bien.consecutivo} Placa: #{bien.placa} Descripción: #{bien.descripcion}" showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                                showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" converter="bienInstitucionalConverter">
+
+                                        <f:facet name="sourceCaption">Bienes Activos</f:facet>
+                                        <f:facet name="targetCaption">Bienes A Prestar</f:facet>
+                                    </p:pickList>
+                                </p:fieldset>
+
+                                <div style="margin-left:38%; padding-top:25px;">
+                                    <h:panelGroup>
+                                        <p:commandButton id="cbAceptar" value="Guardar" action="#{controladorPrestamo.setNuevoPrestamo()}"/>
+                                        <p:commandButton id="cbCancelar" value="Cancelar" action="#{controladorPrestamo.mostrarFrmPrestamo()}" />
+                                    </h:panelGroup>
+                                </div>
+
+                            </h:form>
+                        </div>
+
+                    </div>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

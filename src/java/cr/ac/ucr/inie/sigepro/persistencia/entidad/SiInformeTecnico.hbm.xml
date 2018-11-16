@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiInformeTecnico" table="SI_INFORME_TECNICO" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiInformeTecnicoId">
+            <key-property name="numeroInforme" type="int">
+                <column name="NUMERO_INFORME" />
+            </key-property>
+            <key-property name="annoInforme" type="int">
+                <column name="ANNO_INFORME" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siDesecho" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiDesecho" fetch="select">
+            <column name="NUMERO" not-null="true" />
+            <column name="ANNO" not-null="true" />
+        </many-to-one>
+        <property name="motivoGeneral" type="string">
+            <column name="MOTIVO_GENERAL" length="20" />
+        </property>
+        <property name="recomendacion" type="string">
+            <column name="RECOMENDACION" length="300" />
+        </property>
+        <set name="siSubinformeDesechos" table="SI_SUBINFORME_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMERO_INFORME" not-null="true" />
+                <column name="ANNO_INFORME" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSubinformeDesecho" />
+        </set>
+    </class>
+</hibernate-mapping>

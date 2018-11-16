@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSeTraslada" table="SI_SE_TRASLADA" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSeTrasladaId">
+            <key-property name="numero" type="int">
+                <column name="NUMERO" />
+            </key-property>
+            <key-property name="anno" type="int">
+                <column name="ANNO" />
+            </key-property>
+            <key-property name="codigo" type="string">
+                <column name="CODIGO" length="20" />
+            </key-property>
+            <key-property name="consecutivo" type="int">
+                <column name="CONSECUTIVO" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siBienInstitucional" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional" update="false" insert="false" fetch="select">
+            <column name="CONSECUTIVO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siTraslado" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiTraslado" update="false" insert="false" fetch="select">
+            <column name="NUMERO" not-null="true" />
+            <column name="ANNO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siUnidadAcademica" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadAcademica" update="false" insert="false" fetch="select">
+            <column name="CODIGO" length="20" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

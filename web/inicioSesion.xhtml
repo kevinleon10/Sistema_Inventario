@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+        <ui:composition template="/Plantillas/login.xhtml">
+            <ui:define name="title">Bienvenido - Sistema de Inventario</ui:define>
+            <ui:define name="formulario">
+
+                <div class="formulario-login">
+                    <h:form > 
+                        <h:panelGrid columns="1" cellpadding="5"> 
+                            <p:inputText id="usuario" label="usuario" />
+                            <p:password id="contraseNa" label="Keyword" />
+                        </h:panelGrid>
+                        
+                        <p:watermark for="usuario" value="Usuario" id="waterMarkUsuario" />
+                        <p:watermark for="contraseNa" value="Contraseña" id="waterMarkContrasena" />
+                        
+                        <div>
+                            <h:panelGroup id="panelBotonAceptarCancelar" class="panelBotonesAceptarCancelar">
+                                <p:commandButton id="cbAceptar" value="Ingresar" styleClass="botonAceptar"  onclick="PrimeFaces.monitorDownload(start, stop);"  action="#{controladorAdministrativo.mostrarInicio()}" update="@form" />
+                            </h:panelGroup>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

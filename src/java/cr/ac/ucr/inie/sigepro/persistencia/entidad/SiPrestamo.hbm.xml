@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPrestamo" table="SI_PRESTAMO" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPrestamoId">
+            <key-property name="numero" type="int">
+                <column name="NUMERO" />
+            </key-property>
+            <key-property name="anno" type="int">
+                <column name="ANNO" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siPersona" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA" length="15" not-null="true" />
+        </many-to-one>
+        <property name="fechaInicio" type="date">
+            <column name="FECHA_INICIO" length="10" not-null="true" />
+        </property>
+        <property name="fecharFinal" type="date">
+            <column name="FECHAR_FINAL" length="10" not-null="true" />
+        </property>
+        <property name="reporte" type="binary">
+            <column name="REPORTE" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="15" not-null="true" />
+        </property>
+        <property name="enCondicionDe" type="string">
+            <column name="EN_CONDICION_DE" length="15" not-null="true" />
+        </property>
+        <set name="siSePrestas" table="SI_SE_PRESTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMERO" not-null="true" />
+                <column name="ANNO" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSePresta" />
+        </set>
+    </class>
+</hibernate-mapping>

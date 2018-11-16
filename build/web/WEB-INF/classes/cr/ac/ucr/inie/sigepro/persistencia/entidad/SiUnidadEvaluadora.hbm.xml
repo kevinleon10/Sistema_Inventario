@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadEvaluadora" table="SI_UNIDAD_EVALUADORA" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <id name="codigo" type="string">
+            <column name="CODIGO" length="20" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="siPersona" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA" length="15" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="100" not-null="true" unique="true" />
+        </property>
+        <set name="siSubinformeDesechos" table="SI_SUBINFORME_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO_EVALUADORA" length="20" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSubinformeDesecho" />
+        </set>
+    </class>
+</hibernate-mapping>

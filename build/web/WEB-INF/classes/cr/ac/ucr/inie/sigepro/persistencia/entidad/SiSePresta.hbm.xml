@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSePresta" table="SI_SE_PRESTA" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSePrestaId">
+            <key-property name="numero" type="int">
+                <column name="NUMERO" />
+            </key-property>
+            <key-property name="anno" type="int">
+                <column name="ANNO" />
+            </key-property>
+            <key-property name="consecutivo" type="int">
+                <column name="CONSECUTIVO" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siBienInstitucional" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional" update="false" insert="false" fetch="select">
+            <column name="CONSECUTIVO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siPrestamo" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPrestamo" update="false" insert="false" fetch="select">
+            <column name="NUMERO" not-null="true" />
+            <column name="ANNO" not-null="true" />
+        </many-to-one>
+        <property name="reporte" type="binary">
+            <column name="REPORTE" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="15" />
+        </property>
+        <property name="descripcionEstado" type="string">
+            <column name="DESCRIPCION_ESTADO" length="150" />
+        </property>
+        <property name="fechaFinalReal" type="date">
+            <column name="FECHA_FINAL_REAL" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <h:body>
+        <ui:composition template="/Plantillas/interno-modulo.xhtml">
+            <ui:define name="title">Módulo - #{controladorBienInstitucional.tituloPagina}</ui:define>
+            <ui:define name="formulario"> 
+                <h:form> 
+                    <p:growl id="gwlMensaje" showDetail="true" sticky="false" life="5000" />
+                    <div class="center">
+                        <div class="panelTitulo"><h1>#{controladorBienInstitucional.tituloPagina}</h1></div>                      
+                        <div class="FrmAgregarDatos">                              
+                            <h:form>
+                                <p:growl id="msgs" showDetail="true" />
+
+                                <p:fieldset legend="Información General" style="margin-bottom:20px">
+
+                                    <h:panelGrid style="margin-left: 30%;" columns="2" cellpadding="0" cellspacing="10" class="tablaMantenimiento"   columnClasses="columnaMantenimiento"> 
+                                        <p:outputLabel value="Número del Bien:"/>
+                                        <p:outputLabel value="#{controladorBienInstitucional.ultimoNumBienInstitucional}" />
+                                        <p:outputLabel value="Marca:"/>
+                                        <p:outputLabel value="#{controladorBienInstitucional.marca}" />
+                                        <p:outputLabel value="Proceso:"/>
+                                        <p:outputLabel value="#{controladorBienInstitucional.proceso}" />
+                                        <p:outputLabel value="Modelo"/>
+                                        <p:inputText value="#{controladorBienInstitucional.modelo}" />
+                                        <p:outputLabel value="Serie"/>
+                                        <p:inputText value="#{controladorBienInstitucional.serie}" />
+                                        <p:outputLabel value="Condición del Estado"/>
+                                        <p:inputText value="#{controladorBienInstitucional.condicionEstado}" />
+                                        <p:outputLabel value="Descripción del Estado:"/>
+                                        <p:inputTextarea rows="3" cols="33" value="#{controladorBienInstitucional.descripcionEstado}"/>                                     
+                                        <p:outputLabel value="Ubicación física:"/>
+                                        <p:inputTextarea rows="3" cols="33" value="#{controladorBienInstitucional.ubicacion}"/>
+                                        <p:outputLabel value="Placa"/>
+                                        <p:inputText value="#{controladorBienInstitucional.placa}" />
+                                        <p:outputLabel value="Observaciones:"/>
+                                        <p:inputTextarea rows="3" cols="33" value="#{controladorBienInstitucional.obervaciones}"/>  
+                                        
+
+                                    </h:panelGrid>
+
+                                </p:fieldset>
+
+                               <div class="panelBotonesAceptarCancelar">
+                                    <h:panelGroup>
+                                        <p:commandButton id="cbAceptar" value="Guardar"  onclick="PrimeFaces.monitorDownload(start, stop);" action="#{controladorTraslado.insertarTraslado()}"/>
+                                        <p:commandButton id="cbCancelar" value="Cancelar" action="#{controladorTraslado.mostrarFrmTraslados()}"/>
+                                    </h:panelGroup>
+                                </div>
+
+                            </h:form>
+                        </div>
+
+                    </div>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>

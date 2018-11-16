@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSolicitudDesecho" table="SI_SOLICITUD_DESECHO" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSolicitudDesechoId">
+            <key-property name="numero" type="int">
+                <column name="NUMERO" />
+            </key-property>
+            <key-property name="anno" type="int">
+                <column name="ANNO" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siBienInstitucional" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional" fetch="select">
+            <column name="CONSECUTIVO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siDesecho" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiDesecho" fetch="select">
+            <column name="NUMERO_DESECHO" not-null="true" />
+            <column name="ANNO_DESECHO" not-null="true" />
+        </many-to-one>
+        <set name="siSubinformeDesechos" table="SI_SUBINFORME_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMERO_SOLICITUD" not-null="true" />
+                <column name="ANNO_SOLICITUD" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSubinformeDesecho" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicion" table="SI_ADQUISICION" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="fechaAdquisicion" type="date">
+            <column name="FECHA_ADQUISICION" length="10" not-null="true" />
+        </property>
+        <one-to-one name="siPresupuestoOrdinario" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPresupuestoOrdinario"></one-to-one>
+        <set name="siBienInstitucionals" table="SI_SE_ADQUIERE" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional">
+                <column name="CONSECUTIVO" not-null="true" />
+            </many-to-many>
+        </set>
+        <one-to-one name="siAdquisicionPorTraslado" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicionPorTraslado"></one-to-one>
+        <one-to-one name="siOficinaSuministros" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiOficinaSuministros"></one-to-one>
+        <one-to-one name="siFundacionUcr" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiFundacionUcr"></one-to-one>
+    </class>
+</hibernate-mapping>

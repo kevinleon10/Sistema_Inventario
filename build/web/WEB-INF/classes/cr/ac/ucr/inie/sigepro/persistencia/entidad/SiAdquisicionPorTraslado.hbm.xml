@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicionPorTraslado" table="SI_ADQUISICION_POR_TRASLADO" schema="dbo" catalog="DB_GRUPO4"
+    optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="ID" />
+            <generator class="foreign">
+                <param name="property">siAdquisicion</param>
+            </generator>
+        </id>
+        <one-to-one name="siAdquisicion" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicion" constrained="true"></one-to-one>
+        <many-to-one name="siPersona" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA" length="15" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siUnidadAcademica" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadAcademica" fetch="select">
+            <column name="CODIGO" length="20" not-null="true" />
+        </many-to-one>
+        <property name="numeroOficio" type="string">
+            <column name="NUMERO_OFICIO" length="30" not-null="true" />
+        </property>
+        <property name="reporte" type="binary">
+            <column name="REPORTE" />
+        </property>
+    </class>
+</hibernate-mapping>

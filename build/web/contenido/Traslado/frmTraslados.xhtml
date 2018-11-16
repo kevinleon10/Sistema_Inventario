@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">  
+
+    <h:body>
+        <ui:composition template="/Plantillas/interno-modulo.xhtml">
+            <ui:define name="title">Módulo - #{controladorTraslado.tituloPagina}</ui:define>
+            <ui:define name="formulario"> 
+                <h:form> 
+                    <p:growl id="gwlMensaje" showDetail="true" sticky="false" life="5000" />
+                    <div class="center">
+                        <div class="panelTitulo"><h1>#{controladorTraslado.tituloPagina}</h1></div>
+
+                        <div class="agregarTupla">
+                            <p:commandButton id="cbAgregarTraslado" value="Agregar Traslado" action="#{controladorTraslado.mostrarFrmInsertarTraslado()}" />
+                        </div>
+
+                        <div class="panelDataTable" >
+
+                            <p:dataTable var="traslado" emptyMessage="No se encontraron datos" value="#{controladorTraslado.listaTraslados}"
+                                         paginatorPosition="bottom" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+
+                                <p:column headerText="Fecha de Traslado">
+                                    <h:outputText value="#{traslado.fechaTraslado}" />
+                                </p:column>
+
+                                <p:column headerText="Número de Oficio">
+                                    <h:outputText value="#{traslado.numeroOficio}" />
+                                </p:column>
+                                
+                                 <p:column headerText="Reporte" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnDescargar" value="" >
+                                        <f:setPropertyActionListener target="" value="" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Consultar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnConsultarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorTraslado.setMostrarConsultarTraslado(traslado)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Editar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnEditarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorTraslado.setMostrarEditarTraslado(traslado)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Eliminar" style="width:60px; text-align:center;">
+                                    <p:commandButton class="btnEliminarRegistro" value="" >
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar el traslado seleccionad?" icon="ui-icon-alert" />
+                                        <p:confirmDialog class="botonPopUp" global="true" showEffect="fade" hideEffect="fade">
+                                            <div class="botonPopUp">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes btnAceptar" icon="ui-icon-check" update="@form" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no btnCancelar" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                        <f:setPropertyActionListener target="" value="" />
+                                        <p:ajax event="dialogReturn" update="@form" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

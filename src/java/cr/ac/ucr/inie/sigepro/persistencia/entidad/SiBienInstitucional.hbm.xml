@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional" table="SI_BIEN_INSTITUCIONAL" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <id name="consecutivo" type="int">
+            <column name="CONSECUTIVO" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="siPersona" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA" length="15" />
+        </many-to-one>
+        <many-to-one name="siUnidadAcademica" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadAcademica" fetch="select">
+            <column name="CODIGO" length="20" />
+        </many-to-one>
+        <property name="marca" type="string">
+            <column name="MARCA" length="20" />
+        </property>
+        <property name="modelo" type="string">
+            <column name="MODELO" length="20" />
+        </property>
+        <property name="serie" type="string">
+            <column name="SERIE" length="30" />
+        </property>
+        <property name="condicionEstado" type="string">
+            <column name="CONDICION_ESTADO" length="20" />
+        </property>
+        <property name="descripcionEstado" type="string">
+            <column name="DESCRIPCION_ESTADO" length="300" />
+        </property>
+        <property name="ubicacionFisica" type="string">
+            <column name="UBICACION_FISICA" length="300" />
+        </property>
+        <property name="placa" type="string">
+            <column name="PLACA" length="7" unique="true" />
+        </property>
+        <property name="proceso" type="string">
+            <column name="PROCESO" length="15" not-null="true" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="300" />
+        </property>
+        <property name="equipoDeComputo" type="boolean">
+            <column name="EQUIPO_DE_COMPUTO" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="DESCRIPCION" length="300" not-null="true" />
+        </property>
+        <set name="siAdquisicions" table="SI_SE_ADQUIERE" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="CONSECUTIVO" not-null="true" />
+            </key>
+            <many-to-many entity-name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicion">
+                <column name="ID" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="siSePrestas" table="SI_SE_PRESTA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CONSECUTIVO" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSePresta" />
+        </set>
+        <set name="siSolicitudDesechos" table="SI_SOLICITUD_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CONSECUTIVO" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSolicitudDesecho" />
+        </set>
+        <set name="siSeTrasladas" table="SI_SE_TRASLADA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CONSECUTIVO" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSeTraslada" />
+        </set>
+    </class>
+</hibernate-mapping>

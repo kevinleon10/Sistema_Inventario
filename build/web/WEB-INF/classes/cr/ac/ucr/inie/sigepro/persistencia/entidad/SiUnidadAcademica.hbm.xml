@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiUnidadAcademica" table="SI_UNIDAD_ACADEMICA" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <id name="codigo" type="string">
+            <column name="CODIGO" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="100" not-null="true" unique="true" />
+        </property>
+        <set name="siBienInstitucionals" table="SI_BIEN_INSTITUCIONAL" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" length="20" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiBienInstitucional" />
+        </set>
+        <set name="siAdquisicionPorTraslados" table="SI_ADQUISICION_POR_TRASLADO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" length="20" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiAdquisicionPorTraslado" />
+        </set>
+        <set name="siSeTrasladas" table="SI_SE_TRASLADA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="CODIGO" length="20" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSeTraslada" />
+        </set>
+    </class>
+</hibernate-mapping>

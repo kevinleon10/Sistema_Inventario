@@ -1,0 +1,14 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:form>
+        <h:outputLabel value="Sistema de Inventario del INIE" />
+        <div class="menu-horizontal" >
+            <p:commandButton id="ibCerrarSesion" class="item-menu-horizontal" value="Salir" />
+            <p:commandButton id="cbReportes" class="item-menu-horizontal" value="Reportes"  />
+            <p:commandButton id="ibInicio" class="item-menu-horizontal" value="Inicio" action="#{controladorAdministrativo.mostrarInicio()}" />
+        </div>
+    </h:form>
+    
+</html>

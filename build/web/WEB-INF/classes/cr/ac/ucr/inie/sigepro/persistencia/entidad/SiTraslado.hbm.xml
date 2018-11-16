@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiTraslado" table="SI_TRASLADO" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiTrasladoId">
+            <key-property name="numero" type="int">
+                <column name="NUMERO" />
+            </key-property>
+            <key-property name="anno" type="int">
+                <column name="ANNO" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siPersona" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA" length="15" not-null="true" />
+        </many-to-one>
+        <property name="numeroOficio" type="string">
+            <column name="NUMERO_OFICIO" length="30" not-null="true" />
+        </property>
+        <property name="reporte" type="binary">
+            <column name="REPORTE" />
+        </property>
+        <property name="observaciones" type="string">
+            <column name="OBSERVACIONES" length="300" />
+        </property>
+        <property name="estado" type="string">
+            <column name="ESTADO" length="15" />
+        </property>
+        <property name="fechaTraslado" type="date">
+            <column name="FECHA_TRASLADO" length="10" />
+        </property>
+        <set name="siSeTrasladas" table="SI_SE_TRASLADA" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMERO" not-null="true" />
+                <column name="ANNO" not-null="true" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSeTraslada" />
+        </set>
+    </class>
+</hibernate-mapping>

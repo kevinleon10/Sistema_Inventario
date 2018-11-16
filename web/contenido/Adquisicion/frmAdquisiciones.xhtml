@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <h:body>
+        <ui:composition template="/Plantillas/interno-modulo.xhtml">
+            <ui:define name="title">Módulo - #{controladorAdquisicion.tituloPagina}</ui:define>
+            <ui:define name="formulario"> 
+                <h:form> 
+                    <p:growl id="gwlMensaje" showDetail="true" sticky="true"  />
+                    <div class="center">
+                        <div class="panelTitulo"><h1>#{controladorAdquisicion.tituloPagina}</h1></div>
+
+                        <div id="InsertarAdquisicion" class="agregarTupla">
+                            <p:commandButton id="cbAgregarAdquisicion" update="gwlMensaje" value="Agregar Adquisición" action="#{controladorAdquisicion.mostrarFrmInsertarAdquisicion()}" onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+                        </div>
+                        <p:dialog class="cargando" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                            <img class="gif" src="/Sistema_Inventario/imagenes/ajaxloadingbar.gif"/>
+                        </p:dialog>
+
+                        <div class="panelDataTable" >
+
+                            <p:dataTable var="adquisicion" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_FUNDACION'}" value="#{controladorAdquisicion.listaAdquisiciones}" emptyMessage="No se encontraron datos"
+                                         paginatorPosition="bottom" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{adquisicion.id}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de Adquisición">
+                                    <h:outputText value="#{adquisicion.fechaAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Número de Factura">
+                                    <h:outputText value="#{adquisicion.siFundacionUcr.numeroFactura}" />
+                                </p:column>
+
+                                <p:column headerText="Empresa">
+                                    <h:outputText value="#{adquisicion.siFundacionUcr.empresa}" />
+                                </p:column>
+
+                                <p:column headerText="Consultar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnConsultarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorAdquisicion.setMostrarConsultarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Editar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnEditarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorAdquisicion.setMostrarEditarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Eliminar" style="width:60px; text-align:center;">
+                                    <p:commandButton class="btnEliminarRegistro" value="" >
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar la adquisición seleccionada?" icon="ui-icon-alert" />
+                                        <p:confirmDialog class="botonPopUp" global="true" showEffect="fade" hideEffect="fade">
+                                            <div class="botonPopUp">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes btnAceptar" icon="ui-icon-check" update="@form" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no btnCancelar" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                        <f:setPropertyActionListener target="" value="" />
+                                        <p:ajax event="dialogReturn" update="@form" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dataTable var="adquisicion" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_TRASLADO'}" value="#{controladorAdquisicion.listaAdquisiciones}" emptyMessage="No se encontraron datos"
+                                         paginatorPosition="bottom" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{adquisicion.id}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de Adquisición">
+                                    <h:outputText value="#{adquisicion.fechaAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Número de Oficio">
+                                    <h:outputText value="#{adquisicion.siAdquisicionPorTraslado.numeroOficio}" />
+                                </p:column>
+
+                                <p:column headerText="Reporte" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnDescargar" value="" >
+                                        <f:setPropertyActionListener target="" value="" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Consultar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnConsultarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorAdquisicion.setMostrarConsultarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Editar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnEditarRegistro" value="" >
+                                        <f:setPropertyActionListener target=""  value="#{controladorAdquisicion.setMostrarEditarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Eliminar" style="width:60px; text-align:center;">
+                                    <p:commandButton class="btnEliminarRegistro" value="" >
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar la adquisición seleccionada?" icon="ui-icon-alert" />
+                                        <p:confirmDialog class="botonPopUp" global="true" showEffect="fade" hideEffect="fade">
+                                            <div class="botonPopUp">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes btnAceptar" icon="ui-icon-check" update="@form" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no btnCancelar" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                        <f:setPropertyActionListener target="" value="" />
+                                        <p:ajax event="dialogReturn" update="@form" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dataTable var="adquisicion" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_SUMINISTROS'}" value="#{controladorAdquisicion.listaAdquisiciones}" emptyMessage="No se encontraron datos"
+                                         paginatorPosition="bottom" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{adquisicion.id}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de Adquisición">
+                                    <h:outputText value="#{adquisicion.fechaAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Orden de Compra">
+                                    <h:outputText value="#{adquisicion.siOficinaSuministros.ordenCompra}" />
+                                </p:column>
+
+                                <p:column headerText="Número de Contratación">
+                                    <h:outputText value="#{adquisicion.siOficinaSuministros.numeroContratacion}" />
+                                </p:column>
+
+                                <p:column headerText="Empresa">
+                                    <h:outputText value="#{adquisicion.siOficinaSuministros.empresa}" />
+                                </p:column>
+
+                                <p:column headerText="Consultar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnConsultarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorAdquisicion.setMostrarConsultarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Editar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnEditarRegistro" value="" >
+                                        <f:setPropertyActionListener target=""  value="#{controladorAdquisicion.setMostrarEditarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Eliminar" style="width:60px; text-align:center;">
+                                    <p:commandButton class="btnEliminarRegistro" value="" >
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar la adquisición seleccionada?" icon="ui-icon-alert" />
+                                        <p:confirmDialog class="botonPopUp" global="true" showEffect="fade" hideEffect="fade">
+                                            <div class="botonPopUp">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes btnAceptar" icon="ui-icon-check" update="@form" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no btnCancelar" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                        <f:setPropertyActionListener target="" value="" />
+                                        <p:ajax event="dialogReturn" update="@form" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <p:dataTable var="adquisicion" rendered="#{controladorAdquisicion.tipoAdquisicion eq 'BIEN_ADQUISICION_CONSULTAR_PRESUPUESTO'}" value="#{controladorAdquisicion.listaAdquisiciones}" emptyMessage="No se encontraron datos"
+                                         paginatorPosition="bottom" rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" currentPageReportTemplate="({currentPage} de {totalPages})">
+
+                                <p:column headerText="Id">
+                                    <h:outputText value="#{adquisicion.id}" />
+                                </p:column>
+
+                                <p:column headerText="Fecha de Adquisición">
+                                    <h:outputText value="#{adquisicion.fechaAdquisicion}" />
+                                </p:column>
+
+                                <p:column headerText="Número de Factura">
+                                    <h:outputText value="#{adquisicion.siPresupuestoOrdinario.numeroFactura}" />
+                                </p:column>
+
+                                <p:column headerText="Empresa">
+                                    <h:outputText value="#{adquisicion.siPresupuestoOrdinario.empresa}" />
+                                </p:column>
+
+                                <p:column headerText="Número de Proyecto">
+                                    <h:outputText value="#{adquisicion.siPresupuestoOrdinario.numeroProyecto}" />
+                                </p:column>
+
+                                <p:column headerText="Consultar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnConsultarRegistro" value="" >
+                                        <f:setPropertyActionListener target="" value="#{controladorAdquisicion.setMostrarConsultarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Editar" style="width:60px; text-align:center;" >
+                                    <p:commandButton class="btnEditarRegistro" value="" >
+                                        <f:setPropertyActionListener target=""  value="#{controladorAdquisicion.setMostrarEditarAdquisicion(adquisicion)}" />
+                                    </p:commandButton>
+                                </p:column>
+
+                                <p:column headerText="Eliminar" style="width:60px; text-align:center;">
+                                    <p:commandButton class="btnEliminarRegistro" value="" >
+                                        <p:confirm header="Confirmación" message="¿Está seguro de eliminar la adquisición seleccionada?" icon="ui-icon-alert" />
+                                        <p:confirmDialog class="botonPopUp" global="true" showEffect="fade" hideEffect="fade">
+                                            <div class="botonPopUp">
+                                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes btnAceptar" icon="ui-icon-check" update="@form" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no btnCancelar" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                        <f:setPropertyActionListener target="" value="" />
+                                        <p:ajax event="dialogReturn" update="@form" />
+                                    </p:commandButton>
+                                </p:column>
+
+                            </p:dataTable>
+
+                        </div>
+                    </div>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

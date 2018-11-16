@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/06/2017 02:16:10 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiActaDesecho" table="SI_ACTA_DESECHO" schema="dbo" catalog="DB_GRUPO4" optimistic-lock="version">
+        <composite-id name="id" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiActaDesechoId">
+            <key-property name="numero" type="int">
+                <column name="NUMERO" />
+            </key-property>
+            <key-property name="anno" type="int">
+                <column name="ANNO" />
+            </key-property>
+            <key-property name="oficioDesecho" type="string">
+                <column name="OFICIO_DESECHO" length="30" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="siDesecho" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiDesecho" update="false" insert="false" fetch="select">
+            <column name="NUMERO" not-null="true" />
+            <column name="ANNO" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siPersonaByCedula1" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA1" length="15" not-null="true" />
+        </many-to-one>
+        <many-to-one name="siPersonaByCedula2" class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiPersona" fetch="select">
+            <column name="CEDULA2" length="15" not-null="true" />
+        </many-to-one>
+        <property name="fechaDesecho" type="date">
+            <column name="FECHA_DESECHO" length="10" not-null="true" />
+        </property>
+        <set name="siSubinformeDesechos" table="SI_SUBINFORME_DESECHO" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="NUMERO_ACTA" />
+                <column name="ANNO_ACTA" />
+                <column name="OFICIO_DESECHO" length="30" />
+            </key>
+            <one-to-many class="cr.ac.ucr.inie.sigepro.persistencia.entidad.SiSubinformeDesecho" />
+        </set>
+    </class>
+</hibernate-mapping>
